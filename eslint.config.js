@@ -30,6 +30,6 @@ const config = [
       '@typescript-eslint/consistent-type-definitions': ['error', 'type']
     }
   }
-]
+];
 
-module.exports = config
+module.exports = config;

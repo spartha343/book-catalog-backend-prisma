@@ -1,8 +1,13 @@
-import express from 'express'
-import { CategoryController } from './category.controller'
+import express from 'express';
+import { CategoryController } from './category.controller';
 
-const router = express.Router()
+const router = express.Router();
 
-router.post('/', CategoryController.insertIntoDB)
+router.post('/create-category', CategoryController.insertIntoDB);
+router.post('/', CategoryController.getAllFromDB);
 
-export const CategoryRoutes = router
+router.get('/:id', CategoryController.getDataById);
+router.patch('/:id', CategoryController.updateDataById);
+router.delete('/:id', CategoryController.deleteDataById);
+
+export const CategoryRoutes = router;
