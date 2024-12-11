@@ -9,7 +9,7 @@ import { isPasswordMatched } from './auth.utils';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import { Secret } from 'jsonwebtoken';
 
-const signup = async (data: User): Promise<User> => {
+const signup = async (data: User): Promise<Omit<User, 'password'>> => {
   const doesAlreadyExist = await prisma.user.findFirst({
     where: {
       email: data.email
@@ -27,9 +27,20 @@ const signup = async (data: User): Promise<User> => {
   );
 
   const result = await prisma.user.create({
-    data
+    data,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      contactNo: true,
+      address: true,
+      profileImg: true,
+      createdAt: true,
+      updatedAt: true
+    }
   });
-  return result;
+  return result as Omit<User, 'password'>;
 };
 
 const signin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
@@ -51,18 +62,18 @@ const signin = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   }
 
   const { role, id } = doesUserExist;
-  const currentTimestamp = Math.floor(Date.now() / 1000);
+  // const currentTimestamp = Math.floor(Date.now() / 1000);
   // Add a condition to ensure `iat` is at least 1 year old
-  const iat = currentTimestamp - 60 * 60 * 24 * 365;
+  // const iat = currentTimestamp - 60 * 60 * 24 * 365;
 
   const accessToken = jwtHelpers.createToken(
-    { userId: id, role, iat },
+    { userId: id, role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
 
   const refreshToken = jwtHelpers.createToken(
-    { userId: id, role, iat },
+    { userId: id, role },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string
   );
