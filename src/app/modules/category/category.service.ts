@@ -1,5 +1,7 @@
 import { Category } from '@prisma/client';
 import prisma from '../../../shared/prisma';
+import ApiError from '../../../errors/ApiError';
+import httpStatus from 'http-status';
 
 const insertIntoDB = async (data: Category): Promise<Category> => {
   const result = await prisma.category.create({
@@ -40,6 +42,14 @@ const updateDataById = async (
 };
 
 const deleteDataById = async (id: string): Promise<Category> => {
+  const doesExist = await prisma.category.findUnique({
+    where: {
+      id
+    }
+  });
+  if (!doesExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Category Not Found !');
+  }
   const result = await prisma.category.delete({
     where: {
       id
