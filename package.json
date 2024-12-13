@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "start": "node dist/server.js",
+    "start-dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "lint:check": "eslint .",
