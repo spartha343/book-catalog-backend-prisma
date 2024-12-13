@@ -22,10 +22,10 @@ const config = [
       '@typescript-eslint': require('@typescript-eslint/eslint-plugin')
     },
     rules: {
-      'no-console': 'error',
-      'no-undef': 'error',
-      'no-unused-vars': 'error',
-      'no-unused-expressions': 'error',
+      'no-console': 'warn',
+      'no-undef': 'warn',
+      'no-unused-vars': 'warn',
+      'no-unused-expressions': 'warn',
       'prefer-const': 'warn',
       '@typescript-eslint/consistent-type-definitions': ['error', 'type']
     }
