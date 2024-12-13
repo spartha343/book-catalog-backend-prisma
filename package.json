@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "src/server.ts",
   "scripts": {
+    "postinstall": "npx prisma generate && npx tsc",
     "start": "node dist/server.js",
     "start-dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "prettier:check": "prettier --check .",
@@ -36,6 +37,8 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
+    "@prisma/adapter-neon": "^6.0.1",
     "@prisma/client": "^6.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
